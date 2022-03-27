@@ -110,7 +110,6 @@ exports.forgotPassword = async (req, res) => {
         return responseHandler(res, 400, 'We already sent you an email! Please check it');
       }
 
-      const addOtp = await Otp.create({ email: data.email, code });
       try {
         await mail.sendMail({
           from: APP_EMAIL,
@@ -124,8 +123,10 @@ exports.forgotPassword = async (req, res) => {
           `,
         });
       } catch (err) {
+        console.log(err);
         return responseHandler(res, 500, 'Unexpected Error');
       }
+      const addOtp = await Otp.create({ email: data.email, code });
       return responseHandler(res, 200, 'Your link to reset password has been sent to your email!');
     }
     const fillable = [

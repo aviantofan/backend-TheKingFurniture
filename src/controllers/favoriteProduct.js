@@ -1,6 +1,7 @@
 const responseHandler = require('../helpers/responseHandler');
 const FavoriteProduct = require('../models/favoriteProduct');
 const Product = require('../models/product');
+const ProductImage = require('../models/productImage');
 
 exports.getFavoriteList = async (req, res) => {
   try {
@@ -39,6 +40,14 @@ exports.getFavoriteByProduct = async (req, res) => {
 exports.getFavoriteByUser = async (req, res) => {
   try {
     const favorite = await FavoriteProduct.findAndCountAll({
+      include: [
+        {
+          model: Product,
+          include: [
+            ProductImage,
+          ],
+        },
+      ],
       where: {
         id_user: req.user.id,
       },
