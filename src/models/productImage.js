@@ -5,10 +5,10 @@ const Product = require('./product');
 const ProductImage = sequelize.define('product_image', {
   id_product: {
     type: Sequelize.INTEGER,
-    references: {
-      model: Product,
-      key: 'id',
-    },
+    // references: {
+    //   model: Product,
+    //   key: 'id',
+    // },
   },
   image: {
     type: Sequelize.STRING,

@@ -6,17 +6,17 @@ const User = require('./user');
 const FavoriteProduct = sequelize.define('favorite_product', {
   id_product: {
     type: Sequelize.INTEGER,
-    references: {
-      model: Product,
-      key: 'id',
-    },
+    // references: {
+    //   model: Product,
+    //   key: 'id',
+    // },
   },
   id_user: {
     type: Sequelize.INTEGER,
-    references: {
-      model: User,
-      key: 'id',
-    },
+    // references: {
+    //   model: User,
+    //   key: 'id',
+    // },
   },
 });
 

@@ -6,10 +6,10 @@ const Transaction = sequelize.define('transaction', {
   id_product: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    references: {
-      model: Product,
-      key: 'id',
-    },
+    // references: {
+    //   model: Product,
+    //   key: 'id',
+    // },
   },
   qty: {
     type: Sequelize.INTEGER,
@@ -63,10 +63,10 @@ const Transaction = sequelize.define('transaction', {
   },
   id_transaction_status: {
     type: Sequelize.INTEGER,
-    references: {
-      model: Product,
-      key: 'id',
-    },
+    // references: {
+    //   model: Product,
+    //   key: 'id',
+    // },
     defaultValue: 1,
     allowNull: false,
   },
