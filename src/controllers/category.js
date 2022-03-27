@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const responseHandler = require('../helpers/responseHandler');
 const Category = require('../models/category');
+const ProductCategory = require('../models/productCategory');
 
 exports.getAllCategories = async (req, res) => {
   const { search = '' } = req.query;
@@ -29,6 +30,32 @@ exports.createCategory = async (req, res) => {
     return responseHandler(res, 201, 'Category created!', category);
   } catch (e) {
     return responseHandler(res, 400, 'error', e.errors.map((err) => ({ field: err.path, message: err.message })));
+  }
+};
+
+exports.getProductCount = async (req, res) => {
+  try {
+    const category = await ProductCategory.findAll({
+      attributes: [
+        [Sequelize.col('category.id'), 'id'],
+        [Sequelize.col('category.name'), 'name'],
+        [Sequelize.fn('COUNT', Sequelize.col('id_product')), 'count'],
+      ],
+      include: [
+        {
+          model: Category,
+          attributes: [],
+        },
+      ],
+      group: ['id_category'],
+    });
+    return responseHandler(res, 200, 'Product count for each category', category);
+  } catch (e) {
+    let error = e.message;
+    if (Array.isArray(e.errors)) {
+      error = e.errors.map((err) => ({ field: err.path, message: err.message }));
+    }
+    return responseHandler(res, 400, 'error', error);
   }
 };
 
