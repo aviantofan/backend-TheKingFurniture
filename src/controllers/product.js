@@ -304,6 +304,9 @@ exports.createProduct = async (req, res) => {
       }
       return responseHandler(res, 401, 'You are not able to do this action');
     }
+    if (!req.body.id_category) {
+      return responseHandler(res, 400, 'Please enter at least 1 category', null, null);
+    }
     const listIdCategory = req.body.id_category.split(',');
     if (listIdCategory.length < 1) {
       return responseHandler(res, 400, 'Please enter at least 1 category', null, null);
